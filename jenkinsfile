@@ -19,7 +19,7 @@ stages {
             }
         }
 
-        stage('Push Image Frontend') {
+        stage('Connect Repo Frontend') {
                        
              steps{   
 
