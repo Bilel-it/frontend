@@ -13,17 +13,12 @@ stages {
 
                 echo "#################### Build Image Frontend  #################"
                 sh '''  
-                        docker build -t frontend:1.1-4 .
+                        docker build -t bilelm1/frontend:1.1-4 .
                        
                 '''
 
 
-                echo "#################### Tag & Push Image ms-frontend to azurecr.io #################"
-                sh '''  
-                        
-                        docker tag frontend:1.1-4 frontend:1.1-4
-
-                '''
+                
 
 
             }
@@ -50,7 +45,7 @@ stages {
                
 
                  sh '''  
-                        docker push bilelm1/frontend/frontend:1.1-4
+                        docker push bilelm1/frontend:1.1-4
                        
                 '''
 
