@@ -29,6 +29,16 @@ stages {
                        
                 '''
 
+                 
+            }
+
+        stage('Push Image Frontend') {
+                       
+                
+
+                echo "#################### Push Image Frontend  #################"
+               
+
                  sh '''  
                         docker push bilelm1/frontend/frontend:1.1-4
                        
