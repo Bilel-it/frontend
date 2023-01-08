@@ -16,6 +16,16 @@ stages {
                         docker build -t frontend:1.1-4 .
                        
                 '''
+
+
+                echo "#################### Tag & Push Image ms-frontend to azurecr.io #################"
+                sh '''  
+                        
+                        docker tag frontend:1.1-4 frontend:1.1-4
+
+                '''
+
+
             }
         }
 
