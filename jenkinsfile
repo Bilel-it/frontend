@@ -1,59 +1,53 @@
-pipeline {
+         
+        pipeline {
     agent any
-
- 
-stages {
-  
    
-            
-            stage('BUILD Image Frontend') {
-            steps{
-                checkout scm                
-                
+    stages {
+      
+      
+        stage("Build image"){
+            steps {
 
-                echo "#################### Build Image Frontend  #################"
-                sh '''  
-                        docker build -t bilelm1/frontend:1.1-4 .
-                       
+                sh '''
+                
+                docker build -t bilelm1/frontend:${IMAGETAG}  . 
+
                 '''
 
+                  echo 'image builded'
+            }
+        }
+        stage("Push image"){
+            steps {
+                 script{
+                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub',
+                    usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                        env.REG_USERNAME = USERNAME
+                        env.REG_PASSWORD = PASSWORD
+                    }
 
-                
+               sh ''' 
+               docker login --username=${REG_USERNAME} --password=${REG_PASSWORD}
+                docker push bilelm1/frontend:${IMAGETAG} 
+                '''
 
-
+            }
             }
         }
 
-        stage('Connect Repo Frontend') {
-                       
-             steps{   
+       
 
-                echo "#################### Push Image Frontend  #################"
-                sh '''  
-                        docker login -u bilelm1 -p bilel737189
-                       
-                '''
-             }
-                 
-            }
-
-        stage('Push Image Frontend') {
-                       
-              steps{  
-
-                echo "#################### Push Image Frontend  #################"
-               
-
-                 sh '''  
-                        docker push bilelm1/frontend:1.1-4
-                       
-                '''
-
-              }
-            }
-        }
-}
-            
-            
+    }
+//    post {
+//         always {
+//             emailext body: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS : Check console output at $BUILD_URL to view the details. ', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!'
+//         }
+//     }
+     environment {
+        
+       
+        IMAGETAG = "${env.BUILD_ID}"
+    }
+}    
             
         
