@@ -21,20 +21,20 @@ stages {
 
         stage('Push Image Frontend') {
                        
-                
+             steps{   
 
                 echo "#################### Push Image Frontend  #################"
                 sh '''  
                         docker login -u bilelm1 -p bilel737189
                        
                 '''
-
+             }
                  
             }
 
         stage('Push Image Frontend') {
                        
-                
+              steps{  
 
                 echo "#################### Push Image Frontend  #################"
                
@@ -44,7 +44,7 @@ stages {
                        
                 '''
 
-
+              }
             }
         }
 }
